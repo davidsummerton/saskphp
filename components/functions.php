@@ -3,26 +3,18 @@
 class System {
 
 	static function isPost() {
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			return true;
-		} else {
-			return false;
-		}
+		return $_SERVER['REQUEST_METHOD'] == 'POST';
 	}
 
 	static function isGet() {
-		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-			return true;
-		} else {
-			return false;
-		}
+		return $_SERVER['REQUEST_METHOD'] == 'GET';
 	}
 
 	static function redirect($url) {
 		header( 'Location: '.$url ) ;
+		exit();
 	}
-
-
+	
 	static function cleanseString($string) {
 		$string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
    		return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
