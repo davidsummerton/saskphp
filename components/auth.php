@@ -20,13 +20,9 @@ class Auth {
 	}
 
 	static function loggedIn() {
-
-		if(isset($_SESSION['user_id'])) {
-			return true;
-		} else {
-			return false;
-		}
-
+		
+		return isset($_SESSION['user_id']);
+		
 	}
 
 }
