@@ -1,4 +1,4 @@
-## Sask PHP micro-framework 
+## Sask PHP
 
 Sask is a PHP micro-framework to build web applications, designed to be extremely lightweight, simple to use, and rapid.
 
