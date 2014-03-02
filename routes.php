@@ -20,5 +20,3 @@
 $router = new Router();
 
 $router->add('/', 'Hello/world');
-
-?>

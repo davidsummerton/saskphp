@@ -21,5 +21,3 @@ class Hello extends Sask {
 
 //	Initialize the router
 $router->route();
-
-?>
