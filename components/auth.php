@@ -1,16 +1,15 @@
 <?php
 
-
 class Auth {
 
-	static function login($id) {
+	public static function login($id) {
 
    		$_SESSION['user_id'] = $id;
    		return true;
 
 	}
 
-	static function logout() {
+	public static function logout() {
 
 		if(isset($_SESSION['user_id'])) {
 			unset($_SESSION['user_id']);
@@ -19,7 +18,7 @@ class Auth {
 
 	}
 
-	static function loggedIn() {
+	public static function loggedIn() {
 		
 		return isset($_SESSION['user_id']);
 		
