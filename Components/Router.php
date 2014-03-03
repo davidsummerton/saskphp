@@ -1,63 +1,65 @@
 <?php
 
-class Router {
-	
-	private $routes = array();
-	private $matchfound = false;
-	
-	public function add($pattern, $action) {
+class Router
+{
 
-		$pattern = strtolower('/' . trim($pattern,'/'));
+    private $routes = array();
+    private $matchfound = false;
 
-		$pattern = str_replace(':i', '(\d+)', $pattern);
-		$pattern = str_replace(':s', '([A-Za-z0-9\-\_]+)', $pattern);
+    public function add($pattern, $action)
+    {
 
-		$pattern = '/^' . str_replace('/', '\/', $pattern) . '$/';
-		$this->routes[$pattern] = $action;
-	}
-	
-	public function route() {
+        $pattern = strtolower('/' . trim($pattern, '/'));
 
-		$url = strtolower($_SERVER['REQUEST_URI']);
-		$base = BASE_DIR; //str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+        $pattern = str_replace(':i', '(\d+)', $pattern);
+        $pattern = str_replace(':s', '([A-Za-z0-9\-\_]+)', $pattern);
 
-		if (strpos($url, $base) === 0) {
-			$url = substr($url, strlen($base));
-		}
+        $pattern = '/^' . str_replace('/', '\/', $pattern) . '$/';
+        $this->routes[$pattern] = $action;
+    }
 
-		$url = '/' . trim($url, '/');
+    public function route()
+    {
 
-		foreach ($this->routes as $pattern => $callback) {
-			if (preg_match($pattern, $url, $params)) {
-				array_shift($params);
+        $url = strtolower($_SERVER['REQUEST_URI']);
+        $base = BASE_DIR; //str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
 
-				$actions = explode('/',$callback);
-				$class = $actions[0];
-				$function = $actions[1];
+        if (strpos($url, $base) === 0) {
+            $url = substr($url, strlen($base));
+        }
 
-				$this->matchfound = true;
+        $url = '/' . trim($url, '/');
 
-				
-				$route = new $class();
-				call_user_func_array(array($route, $function), array_values($params));
+        foreach ($this->routes as $pattern => $callback) {
+            if (preg_match($pattern, $url, $params)) {
+                array_shift($params);
 
-			}
+                $actions = explode('/', $callback);
+                $class = $actions[0];
+                $function = $actions[1];
 
-		}
+                $this->matchfound = true;
 
-		if(!$this->matchfound) {
-			System::redirect(BASE_DIR . NOTFOUND_URI);
-		}
 
-	}
+                $route = new $class();
+                call_user_func_array(array($route, $function), array_values($params));
+            }
+        }
 
-	public function notfound ($file = null) {
-		header('HTTP/1.0 404 Not Found');
-		if (is_null($file)) {
-			exit("<h1>404 Not Found</h1>\nThe page that you have requested could not be found.");
-		} else {
-			include_once($file);
-			exit;
-		}
-	}
+        if (!$this->matchfound) {
+            System::redirect(BASE_DIR . NOTFOUND_URI);
+        }
+    }
+
+    public function notfound($file = null)
+    {
+        header('HTTP/1.0 404 Not Found');
+        if (is_null($file)) {
+            exit("<h1>404 Not Found</h1>\nThe page that you have requested could not be found.");
+        } else {
+            include_once($file);
+            exit;
+        }
+    }
+
 }
