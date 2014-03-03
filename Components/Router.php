@@ -1,11 +1,33 @@
 <?php
-
+/**
+ * Contains the router
+ *
+ * @author David Summerton
+ * @author Stefanie Janine Stoelting <mail@stefanie-stoelting.de>
+ * @link http://saskphp.com/ Sask website
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 class Router
 {
 
+    /**
+     * Contains the routes<br>
+     * Default: Empty array
+     * @var array
+     */
     private $routes = array();
+    
+    /**
+     * Default is false
+     * @var boolean
+     */
     private $matchfound = false;
 
+    /**
+     * 
+     * @param string $pattern
+     * @param sting $action
+     */
     public function add($pattern, $action)
     {
 
@@ -18,6 +40,9 @@ class Router
         $this->routes[$pattern] = $action;
     }
 
+    /**
+     * Redirects to a route.
+     */
     public function route()
     {
 
@@ -51,6 +76,10 @@ class Router
         }
     }
 
+    /**
+     * 
+     * @param sting $file Includes the given file,
+     */
     public function notfound($file = null)
     {
         header('HTTP/1.0 404 Not Found');
