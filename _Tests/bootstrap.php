@@ -7,3 +7,7 @@
  * @license http://opensource.org/licenses/MIT MIT
  */
 
+$ignore = array(
+    'Cache'
+);
+AutoLoader::registerDirectory(__DIR__ . '/..', $ignore);
