@@ -6,7 +6,17 @@
  * @link http://saskphp.com/ Sask website
  * @license http://opensource.org/licenses/MIT MIT
  */
-require_once('Sask.php');
+require_once('Components/AutoLoad.php');
+$ignore = array(
+    'Cache'
+);
+AutoLoader::registerDirectory(__DIR__, $ignore);
+
+session_start();
+ob_start();
+
+$sask = new Sask();
+
 
 /**
  * Feel free to delete this class and create your own!

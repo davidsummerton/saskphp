@@ -1,6 +1,7 @@
 <?php
 /**
- * Main class of the framework, initializes the application.
+ * Main class of the framework, initializes the application.<br>
+ * Change the global constants of this class to fit your environment
  *
  * @author David Summerton
  * @author Stefanie Janine Stoelting <mail@stefanie-stoelting.de>
@@ -9,6 +10,23 @@
  */
 class Sask
 {
+    /**
+     * @var string Change SECURITYSALT to a random assortment of letters and
+     * numbers as this is used in hashing.
+     */
+    const SECURITYSALT = 'hfhy394niyn404983nuhirh65fv89uvd';
+
+    /**
+     * @var string Change BASE_DIR if Sask is not in the root URI directory.
+     * Ensure to keep the beginning /
+     */
+    const BASE_DIR = '';
+
+    /**
+     * @var string Change NOTFOUND_URI to whatever route/URI you wish to direct
+     * your 404 pages to.
+     */
+    const NOTFOUND_URI = '/';
 
     /**
      * The reference to the database class.
@@ -42,22 +60,3 @@ class Sask
     }
 
 }
-/*
- * 	Global constants
- * 	==================
- * 	You need to set these constants.
- *
- * 	Change SECURITYSALT to a random assortment of letters and numbers
- * 	as this is used in hashing.
- *
- * 	Change BASE_DIR if Sask is not in the root URI directory.
- * 	Ensure to keep the beginning /
- *
- * 	Change NOTFOUND_URI to whatever route/URI you wish to direct your
- * 	404 pages to.
- */
-
-define("SECURITYSALT", "hfhy394niyn404983nuhirh65fv89uvd");
-define("BASE_DIR", "");
-define("NOTFOUND_URI", "/");
-

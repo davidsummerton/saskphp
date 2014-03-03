@@ -16,7 +16,7 @@ class Router
      * @var array
      */
     private $routes = array();
-    
+
     /**
      * Default is false
      * @var boolean
@@ -24,7 +24,7 @@ class Router
     private $matchfound = false;
 
     /**
-     * 
+     *
      * @param string $pattern
      * @param sting $action
      */
@@ -72,12 +72,12 @@ class Router
         }
 
         if (!$this->matchfound) {
-            System::redirect(BASE_DIR . NOTFOUND_URI);
+            System::redirect(Sask::BASE_DIR . Sask::NOTFOUND_URI);
         }
     }
 
     /**
-     * 
+     *
      * @param sting $file Includes the given file,
      */
     public function notfound($file = null)
