@@ -72,10 +72,10 @@ define("NOTFOUND_URI", "/");
 session_start();
 ob_start();
 
-require_once('components/database.php');
-require_once('components/auth.php');
-require_once('components/functions.php');
-require_once('components/router.php');
+require_once('Components/Database.php');
+require_once('Components/Auth.php');
+require_once('Components/Functions.php');
+require_once('Components/Router.php');
 require_once('routes.php');
 
 /*
