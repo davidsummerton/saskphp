@@ -61,25 +61,3 @@ define("SECURITYSALT", "hfhy394niyn404983nuhirh65fv89uvd");
 define("BASE_DIR", "");
 define("NOTFOUND_URI", "/");
 
-/* * **************************************
- * 		NOTHING TO CONFIGURE BELOW
- * 					HERE
- * ************************************** */
-
-/*
- * 	Including Sask components
- */
-session_start();
-ob_start();
-
-require_once('Components/Database.php');
-require_once('Components/Auth.php');
-require_once('Components/Functions.php');
-require_once('Components/Router.php');
-require_once('routes.php');
-
-/*
- * 	Initialize the Sask framework
- */
-
-$sask = new Sask();
