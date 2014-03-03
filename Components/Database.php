@@ -476,4 +476,4 @@ class Database
 		return $arr;
 	}
 
-} // END class
+}
