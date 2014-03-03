@@ -1,30 +1,51 @@
 <?php
 
-
 class Auth {
 
-	static function login($id) {
-
-   		$_SESSION['user_id'] = $id;
-   		return true;
-
+	/**
+	 * Login the user with an ID.
+	 * 
+	 * @param  int $id
+	 * @return void
+	 */
+	public static function login($id)
+	{
+		$_SESSION['user_id'] = $id;
 	}
 
-	static function logout() {
-
-		if(isset($_SESSION['user_id'])) {
+	/**
+	 * Logout current user.
+	 * 
+	 * @return void
+	 */
+	public static function logout()
+	{
+		if (isset($_SESSION['user_id']))
+		{
 			unset($_SESSION['user_id']);
 			session_destroy();
 		}
-
 	}
 
-	static function loggedIn() {
-		
+	/**
+	 * Checks if the current visitor is logged-in.
+	 * 
+	 * @return boolean
+	 */
+	public static function loggedIn()
+	{
 		return isset($_SESSION['user_id']);
-		
+	}
+
+	/**
+	 * Returns the current user ID.
+	 * 
+	 * @return int|null
+	 */
+	public static function getUserId()
+	{
+		// Use static::loggedIn() if use PHP 5.3 >=
+		return self::loggedIn() ? $_SESSION['user_id'] : null;
 	}
 
 }
-
-?>

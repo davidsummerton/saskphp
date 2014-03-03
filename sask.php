@@ -22,7 +22,6 @@ class Sask {
     }
 }
 
-
 /*
 *	Global constants
 * 	==================
@@ -42,8 +41,6 @@ define("SECURITYSALT", "hfhy394niyn404983nuhirh65fv89uvd");
 define("BASE_DIR", ""); 
 define("NOTFOUND_URI", "/"); 
 
-
-
 /****************************************
 *		NOTHING TO CONFIGURE BELOW
 *					HERE
@@ -54,20 +51,15 @@ define("NOTFOUND_URI", "/");
 */
 session_start();
 ob_start();
+
 require_once('components/database.php');
 require_once('components/auth.php');
 require_once('components/functions.php');
 require_once('components/router.php');
 require_once('routes.php');
 
-
-
 /*
 *	Initialize the Sask framework
 */
 
 $sask = new Sask();
-
-
-
-?>
