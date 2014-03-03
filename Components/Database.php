@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * The database class handles the connection and tools, to get data in and out
+ * of databases.
+ *
+ * @author David Summerton
+ * @link http://saskphp.com/ Sask website
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 class Database
 {
 
@@ -53,13 +60,14 @@ class Database
     protected $_bindParams = array(''); // Create the empty 0 index
 
     /**
+     * The constructor initializes the database connection.
+     * 
      * @param string $host
      * @param string $username
      * @param string $password
      * @param string $db
      * @param int $port
      */
-
     public function __construct($host, $username, $password, $db, $port = NULL)
     {
         if ($port == NULL)
