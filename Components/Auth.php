@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Contains the authentication.
+ *
+ * @author David Summerton
+ * @link http://saskphp.com/ Sask website
+ * @license http://opensource.org/licenses/MIT MIT
+ */
 class Auth
 {
 
