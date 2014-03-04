@@ -16,7 +16,6 @@ class Hello extends Sask
 
     public function world()
     {
-
         echo "Hello World!";
     }
 
