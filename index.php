@@ -5,18 +5,23 @@
  * @author David Summerton
  * @link http://saskphp.com/ Sask website
  * @license http://opensource.org/licenses/MIT MIT
+ * @package Sask
  */
-require_once('Components/AutoLoad.php');
+
 $ignore = array(
-    'Cache'
+    __DIR__ . '/Cache',
+    __DIR__ . '/_Tests',
+    __DIR__ . '/nbproject',
+    __DIR__ .'/.git',
 );
+require_once(__DIR__ . '/Components/AutoLoader.php');
+
 AutoLoader::registerDirectory(__DIR__, $ignore);
 
 session_start();
 ob_start();
 
-$sask = new Sask();
-
+$sask = new Sask(__DIR__);
 
 /**
  * Feel free to delete this class and create your own!
@@ -35,4 +40,4 @@ class Hello extends Sask
 /**
  * Initialize the router
  */
-$router->route();
+Sask::$router->route();
