@@ -7,6 +7,7 @@
  * @author Stefanie Janine Stoelting<mail.stefanie-stoelting.de>
  * @link http://saskphp.com/ Sask website
  * @license http://opensource.org/licenses/MIT MIT
+ * @package Sask
  */
 class AutoLoader
 {
@@ -29,34 +30,50 @@ class AutoLoader
      * @param string $dirName Directory, where the class names are located
      * @param array $ignore An array with path names, that shoud be ignored.<br>
      *                       Default is an empty array
-     * @param boolean $useCache Writes a cache file, if it does not exist and
-     *                          loads the $className array from that cache<br>
-     *                          Default is false
      */
-    public static function registerDirectory($dirName, $ignore = array(), $useCache = false)
+    public static function registerDirectory($dirName, $ignore = array())
     {
-        AutoLoader::$_cacheFile = __DIR__ . '/../Cache/className.cache';
-        if ($useCache && file_exists(AutoLoader::$_cacheFile)) {
-            AutoLoader::$_classNames = unserialize(file_get_contents(AutoLoader::$_cacheFile));
-        } else {
-            $di = new DirectoryIterator($dirName);
-            foreach ($di as $file) {
-
-                if ($file->isDir() && !$file->isLink() && !$file->isDot()) {
-                    if (!in_array($file->getPathname(), $ignore)) {
-                        // recurse into directories other than a few special ones
-                        self::registerDirectory($file->getPathname(), $ignore);
-                    }
-                } elseif (substr($file->getFilename(), -4) === '.php') {
-                    // save the class name / path of a .php file found
-                    $className = substr($file->getFilename(), 0, -4);
-                    AutoLoader::registerClass($className, $file->getPathname());
+        $di = new DirectoryIterator($dirName);
+        foreach ($di as $file) {
+            if ($file->isDir() && !$file->isLink() && !$file->isDot()) {
+                if (!in_array($file->getPathname(), $ignore)) {
+                    // recurse into directories other than a few special ones
+                    self::registerDirectory($file->getPathname(), $ignore);
                 }
-            }
-            if ($useCache) {
-                file_put_contents(AutoLoader::$_cacheFile, serialize(AutoLoader::$_classNames));
+            } elseif (substr($file->getFilename(), -4) === '.php') {
+                // save the class name / path of a .php file found
+                $className = substr($file->getFilename(), 0, -4);
+                AutoLoader::registerClass($className, $file->getPathname());
             }
         }
+    }
+
+    /**
+     * Register cache file.
+     *
+     * @param string $cacheFile
+     */
+    public static function registerCache($cacheFile)
+    {
+        self::$_cacheFile = $cacheFile;
+    }
+
+    /**
+     * Loads classes from cache.
+     */
+    public static function loadFromCache()
+    {
+        if (file_exists(self::$_cacheFile)) {
+            self::$_classNames = unserialize(file_get_contents(self::$_cacheFile));
+        }
+    }
+
+    /**
+     * Safe classes to cache.
+     */
+    public static function saveToCache()
+    {
+        file_put_contents(self::$_cacheFile, serialize(self::$_classNames));
     }
 
     /**
@@ -67,7 +84,7 @@ class AutoLoader
      */
     public static function registerClass($className, $fileName)
     {
-        AutoLoader::$_classNames[$className] = $fileName;
+        self::$_classNames[$className] = $fileName;
     }
 
     /**
@@ -77,8 +94,8 @@ class AutoLoader
      */
     public static function loadClass($className)
     {
-        if (isset(AutoLoader::$_classNames[$className])) {
-            require_once(AutoLoader::$_classNames[$className]);
+        if (isset(self::$_classNames[$className])) {
+            require_once(self::$_classNames[$className]);
         }
     }
 
@@ -89,10 +106,11 @@ class AutoLoader
      */
     public static function getCacheFileName()
     {
-        return AutoLoader::$_cacheFile;
+        return self::$_cacheFile;
     }
 
     /**
+     * Updates the cache file.
      *
      * @param string $dirName Directory, where the class names are located
      * @param array $ignore An array with path names, that shoud be ignored.<br>
@@ -100,9 +118,11 @@ class AutoLoader
      */
     public static function updateCacheFile($dirName, $ignore = array())
     {
-        unlink(AutoLoader::$_cacheFile);
+        unlink(self::$_cacheFile);
 
-        AutoLoader::registerDirectory($dirName, $ignore, true);
+        self::registerDirectory($dirName, $ignore, true);
+
+        self::saveToCache();
     }
 
 }
