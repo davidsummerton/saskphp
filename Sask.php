@@ -7,6 +7,7 @@
  * @author Stefanie Janine Stoelting <mail@stefanie-stoelting.de>
  * @link http://saskphp.com/ Sask website
  * @license http://opensource.org/licenses/MIT MIT
+ * @package Sask
  */
 class Sask
 {
@@ -15,12 +16,6 @@ class Sask
      * numbers as this is used in hashing.
      */
     const SECURITYSALT = 'hfhy394niyn404983nuhirh65fv89uvd';
-
-    /**
-     * @var string Change BASE_DIR if Sask is not in the root URI directory.
-     * Ensure to keep the beginning /
-     */
-    const BASE_DIR = '';
 
     /**
      * @var string Change NOTFOUND_URI to whatever route/URI you wish to direct
@@ -35,10 +30,28 @@ class Sask
     public static $database;
 
     /**
-     * Constructor of Sask, initialization of the database class.
+     * The base directory
+     * @var string
      */
-    public function __construct()
+    public static $basedir;
+
+    /**
+     * The router
+     * @var Router
+     */
+    public static $router;
+
+    /**
+     * Constructor of Sask, initialization of the database class.
+     * 
+     * @param string $baseDir The base directory of the application
+     */
+    public function __construct($baseDir = __DIR__)
     {
+
+        self::$basedir = $baseDir;
+
+        self::$router = new Router();
 
         /*
          * 	Connect to the database
@@ -51,12 +64,16 @@ class Sask
         $database_password = "";
         $database_name = "";
 
-        $this->database = new Database(
+        self::$database = new Database(
                 $database_host,
                 $database_user,
                 $database_password,
                 $database_name
         );
+
+        foreach (Configuration::$routes as $key => $value) {
+            self::$router->add($key, $value);
+        }
     }
 
 }
