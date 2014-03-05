@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Automatic class file loading by directory.
  * The class name has to match the filename without suffix.<br>
@@ -60,20 +61,36 @@ class AutoLoader
 
     /**
      * Loads classes from cache.
+     *
+     * @return boolean True on success, otherwise false
      */
     public static function loadFromCache()
     {
         if (file_exists(self::$_cacheFile)) {
             self::$_classNames = unserialize(file_get_contents(self::$_cacheFile));
+            $result = true;
+        } else {
+            $result = false;
         }
+
+        return $result;
     }
 
     /**
      * Safe classes to cache.
+     *
+     * @return boolean True on success, otherwise false
      */
     public static function saveToCache()
     {
-        file_put_contents(self::$_cacheFile, serialize(self::$_classNames));
+        if (!empty(self::$_cacheFile)) {
+            file_put_contents(self::$_cacheFile, serialize(self::$_classNames));
+            $result = file_exists(self::$_cacheFile);
+        } else {
+            $result = false;
+        }
+
+        return $result;
     }
 
     /**
@@ -81,10 +98,13 @@ class AutoLoader
      *
      * @param string $className
      * @param string $fileName
+     * @return boolean True on success
      */
     public static function registerClass($className, $fileName)
     {
         self::$_classNames[$className] = $fileName;
+
+        return array_key_exists($className, self::$_classNames);
     }
 
     /**
