@@ -7,7 +7,13 @@
  * @license http://opensource.org/licenses/MIT MIT
  */
 
+require_once(__DIR__ . '/../Components/AutoLoader.php');
+
 $ignore = array(
-    'Cache'
+    realpath(__DIR__ . '/../Cache'),
+    realpath(__DIR__ . '/../_Tests'),
+    realpath(__DIR__ . '/../nbproject'),
+    realpath(__DIR__ .'/../.git'),
 );
-AutoLoader::registerDirectory(__DIR__ . '/..', $ignore);
+
+AutoLoader::registerDirectory(realpath(__DIR__ . '/..'), $ignore);
