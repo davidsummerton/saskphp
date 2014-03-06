@@ -41,3 +41,4 @@ class Hello extends Sask
  * Initialize the router
  */
 Sask::$router->route();
+
