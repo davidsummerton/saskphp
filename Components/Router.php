@@ -6,6 +6,7 @@
  * @author Stefanie Janine Stoelting <mail@stefanie-stoelting.de>
  * @link http://saskphp.com/ Sask website
  * @license http://opensource.org/licenses/MIT MIT
+ * @package Sask
  */
 class Router
 {
@@ -16,7 +17,7 @@ class Router
      * @var array
      */
     private $routes = array();
-    
+
     /**
      * Default is false
      * @var boolean
@@ -24,7 +25,7 @@ class Router
     private $matchfound = false;
 
     /**
-     * 
+     *
      * @param string $pattern
      * @param sting $action
      */
@@ -47,7 +48,8 @@ class Router
     {
 
         $url = strtolower($_SERVER['REQUEST_URI']);
-        $base = BASE_DIR; //str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+
+        $base = Sask::$basedir;
 
         if (strpos($url, $base) === 0) {
             $url = substr($url, strlen($base));
@@ -72,12 +74,12 @@ class Router
         }
 
         if (!$this->matchfound) {
-            System::redirect(BASE_DIR . NOTFOUND_URI);
+            System::redirect(Sask::$basedir . Sask::NOTFOUND_URI);
         }
     }
 
     /**
-     * 
+     *
      * @param sting $file Includes the given file,
      */
     public function notfound($file = null)

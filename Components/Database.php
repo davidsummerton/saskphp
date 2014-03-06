@@ -6,6 +6,7 @@
  * @author David Summerton
  * @link http://saskphp.com/ Sask website
  * @license http://opensource.org/licenses/MIT MIT
+ * @package Sask
  */
 class Database
 {

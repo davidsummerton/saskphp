@@ -1,14 +1,27 @@
 <?php
 /**
- * Main class of the framework, initializes the application.
+ * Main class of the framework, initializes the application.<br>
+ * Change the global constants of this class to fit your environment
  *
  * @author David Summerton
  * @author Stefanie Janine Stoelting <mail@stefanie-stoelting.de>
  * @link http://saskphp.com/ Sask website
  * @license http://opensource.org/licenses/MIT MIT
+ * @package Sask
  */
 class Sask
 {
+    /**
+     * @var string Change SECURITYSALT to a random assortment of letters and
+     * numbers as this is used in hashing.
+     */
+    const SECURITYSALT = 'hfhy394niyn404983nuhirh65fv89uvd';
+
+    /**
+     * @var string Change NOTFOUND_URI to whatever route/URI you wish to direct
+     * your 404 pages to.
+     */
+    const NOTFOUND_URI = '/';
 
     /**
      * The reference to the database class.
@@ -17,10 +30,28 @@ class Sask
     public static $database;
 
     /**
-     * Constructor of Sask, initialization of the database class.
+     * The base directory
+     * @var string
      */
-    public function __construct()
+    public static $basedir;
+
+    /**
+     * The router
+     * @var Router
+     */
+    public static $router;
+
+    /**
+     * Constructor of Sask, initialization of the database class.
+     * 
+     * @param string $baseDir The base directory of the application
+     */
+    public function __construct($baseDir = __DIR__)
     {
+
+        self::$basedir = $baseDir;
+
+        self::$router = new Router();
 
         /*
          * 	Connect to the database
@@ -33,53 +64,16 @@ class Sask
         $database_password = "";
         $database_name = "";
 
-        $this->database = new Database(
+        self::$database = new Database(
                 $database_host,
                 $database_user,
                 $database_password,
                 $database_name
         );
+
+        foreach (Configuration::$routes as $key => $value) {
+            self::$router->add($key, $value);
+        }
     }
 
 }
-/*
- * 	Global constants
- * 	==================
- * 	You need to set these constants.
- *
- * 	Change SECURITYSALT to a random assortment of letters and numbers
- * 	as this is used in hashing.
- *
- * 	Change BASE_DIR if Sask is not in the root URI directory.
- * 	Ensure to keep the beginning /
- *
- * 	Change NOTFOUND_URI to whatever route/URI you wish to direct your
- * 	404 pages to.
- */
-
-define("SECURITYSALT", "hfhy394niyn404983nuhirh65fv89uvd");
-define("BASE_DIR", "");
-define("NOTFOUND_URI", "/");
-
-/* * **************************************
- * 		NOTHING TO CONFIGURE BELOW
- * 					HERE
- * ************************************** */
-
-/*
- * 	Including Sask components
- */
-session_start();
-ob_start();
-
-require_once('Components/Database.php');
-require_once('Components/Auth.php');
-require_once('Components/Functions.php');
-require_once('Components/Router.php');
-require_once('routes.php');
-
-/*
- * 	Initialize the Sask framework
- */
-
-$sask = new Sask();
