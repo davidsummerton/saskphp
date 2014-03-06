@@ -31,7 +31,6 @@ class Hello extends Sask
 
     public function world()
     {
-
         echo "Hello World!";
     }
 
@@ -41,3 +40,4 @@ class Hello extends Sask
  * Initialize the router
  */
 Sask::$router->route();
+
