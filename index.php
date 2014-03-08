@@ -7,12 +7,11 @@
  * @license http://opensource.org/licenses/MIT MIT
  * @package Sask
  */
-
 $ignore = array(
     __DIR__ . '/Cache',
     __DIR__ . '/_Tests',
     __DIR__ . '/nbproject',
-    __DIR__ .'/.git',
+    __DIR__ . '/.git',
 );
 require_once(__DIR__ . '/Components/AutoLoader.php');
 
@@ -22,7 +21,6 @@ session_start();
 ob_start();
 
 $sask = new Sask(__DIR__);
-
 /**
  * Feel free to delete this class and create your own!
  */
@@ -31,12 +29,20 @@ class Hello extends Sask
 
     public function world()
     {
+        echo 'Hello World!';
+    }
 
-        echo "Hello World!";
+    public function test()
+    {
+        echo 'Test message';
+    }
+
+    public function page404()
+    {
+        echo 'The page you have requested can not be found on this server.';
     }
 
 }
-
 /**
  * Initialize the router
  */
