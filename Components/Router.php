@@ -50,7 +50,7 @@ class Router
         $url = strtolower($_SERVER['REQUEST_URI']);
 
         if (strpos($url, Configuration::WEB_ROOT) === 0) {
-            $url = substr($url, strlen(Configuration::WEB_ROOT ));
+            $url = substr($url, strlen(Configuration::WEB_ROOT));
         }
 
         $url = '/' . trim($url, '/');
