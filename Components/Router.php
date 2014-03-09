@@ -49,10 +49,8 @@ class Router
 
         $url = strtolower($_SERVER['REQUEST_URI']);
 
-        $base = Sask::$basedir;
-
-        if (strpos($url, $base) === 0) {
-            $url = substr($url, strlen($base));
+        if (strpos($url, Configuration::WEB_ROOT) === 0) {
+            $url = substr($url, strlen(Configuration::WEB_ROOT));
         }
 
         $url = '/' . trim($url, '/');
@@ -74,7 +72,7 @@ class Router
         }
 
         if (!$this->matchfound) {
-            System::redirect(Sask::$basedir . Sask::NOTFOUND_URI);
+            System::redirect(Configuration::NOTFOUND_URI);
         }
     }
 

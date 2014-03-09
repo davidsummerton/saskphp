@@ -12,18 +12,6 @@
 class Sask
 {
     /**
-     * @var string Change SECURITYSALT to a random assortment of letters and
-     * numbers as this is used in hashing.
-     */
-    const SECURITYSALT = 'hfhy394niyn404983nuhirh65fv89uvd';
-
-    /**
-     * @var string Change NOTFOUND_URI to whatever route/URI you wish to direct
-     * your 404 pages to.
-     */
-    const NOTFOUND_URI = '/';
-
-    /**
      * The reference to the database class.
      * @var Database
      */
@@ -43,7 +31,7 @@ class Sask
 
     /**
      * Constructor of Sask, initialization of the database class.
-     * 
+     *
      * @param string $baseDir The base directory of the application
      */
     public function __construct($baseDir = __DIR__)
@@ -59,17 +47,23 @@ class Sask
          * 	Set your database access details here.
          */
 
-        $database_host = "localhost";
-        $database_user = "";
-        $database_password = "";
-        $database_name = "";
+        if (Configuration::$dbConnection ['UseDatabase']) {
+            switch (Configuration::$dbConnection ['Type']) {
+                case 'MySQL':
+                    self::$database = new Database(
+                        Configuration::$dbConnection ['Host'], 
+                        Configuration::$dbConnection ['User'], 
+                        Configuration::$dbConnection ['Password'], 
+                        Configuration::$dbConnection ['DatabaseName'],
+                        Configuration::$dbConnection ['Port']
+                    );
 
-        self::$database = new Database(
-                $database_host,
-                $database_user,
-                $database_password,
-                $database_name
-        );
+                    break;
+
+                default:
+                    break;
+            }
+        }
 
         foreach (Configuration::$routes as $key => $value) {
             self::$router->add($key, $value);
